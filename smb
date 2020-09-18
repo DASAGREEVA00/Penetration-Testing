@@ -14,7 +14,7 @@ read/write, and access files similar to the file system on a local computer.
 Versions of Windows SMB
 	1.CIFS: The old version of SMB, which was included in Microsoft Windows NT 4.0 in 1996.
 	2.SMB 1.0 / SMB1: The version used in Windows 2000, Windows XP, Windows Server 2003 and Windows Server 2003 R2.
-    3.SMB 2.0 / SMB2: This version used in Windows Vista and Windows Server 2008.
+        3.SMB 2.0 / SMB2: This version used in Windows Vista and Windows Server 2008.
 	4.SMB 2.1 / SMB2.1: This version used in Windows 7 and Windows Server 2008 R2.
 	5.SMB 3.0 / SMB3: This version used in Windows 8 and Windows Server 2012.
 	6.SMB 3.02 / SMB3: This version used in Windows 8.1 and Windows Server 2012 R2.
@@ -39,8 +39,9 @@ To identify the following information of Windows or Samba system, every penteste
 Scanning for the NetBIOS Service
 	The SMB NetBIOS service listen on TCP port 139 and 445, as well as several UDP ports. 
 1. nmap
-	nmap -v -p 139,445 -oG smb.txt IPADDRESS
-	nmap --script smb* -p 139,445 IPADDRESS
+	#nmap -v -p 139,445 -oG smb.txt IPADDRESS
+	#nmap --script smb* -p 139,445 IPADDRESS
+	Scripts-list
 	/usr/share/nmap/scripts/smb2-capabilities.nse
 	/usr/share/nmap/scripts/smb2-security-mode.nse
 	/usr/share/nmap/scripts/smb2-time.nse
@@ -77,47 +78,33 @@ Scanning for the NetBIOS Service
 	/usr/share/nmap/scripts/smb-vuln-webexec.nse
 	/usr/share/nmap/scripts/smb-webexec-exploit.nse
 2. nbtscan 
-	nbtscan -r IPADDRESS
+	#nbtscan -r IPADDRESS
 
 3. nmblookup
-	nmblookup -A IPADDRESS 
+	#nmblookup -A IPADDRESS 
 	
 	For unique names:
-
 	    00: Workstation Service (workstation name)
-
 	    03: Windows Messenger service
-
 	    06: Remote Access Service
-
 	    20: File Service (also called Host Record)
-
 	    21: Remote Access Service client
-
 	    1B: Domain Master Browser – Primary Domain Controller for a domain
-
 	    1D: Master Browser
-
 	For group names:
-
 	    00: Workstation Service (workgroup/domain name)
-
 	    1C: Domain Controllers for a domain
-
 	    1E: Browser Service Elections
-
 4. SMBMap
-	smbmap -H IPADDRESS
-	smbmap -H IPADDRESS -d DOMAIN -u USERNAME -p PASSWORD
+	#smbmap -H IPADDRESS
+	#smbmap -H IPADDRESS -d DOMAIN -u USERNAME -p PASSWORD
 
 5. smbclient 
-
-	smbclient -L IPADDRESS
-	smbclient  //IPADDRESS/SHARE 
+	#smbclient -L IPADDRESS
+	#smbclient  //IPADDRESS/SHARE 
 
 6. enum4linux 	
 	Key Features
-
 	1.RID cycling (When RestrictAnonymous is set to 1 on Windows 2000)
 	2.User listing (When RestrictAnonymous is set to 0 on Windows 2000)
 	3.Listing of group membership information
@@ -126,13 +113,14 @@ Scanning for the NetBIOS Service
 	6.Identifying the remote operating system
 	7.Password policy retrieval
 
- 	enum4linux -a IPADDRESS
+ 	#enum4linux -a IPADDRESS
 
 7.rpcclient 
 We can use rpcclient to open an authenticated SMB session to a target machine by creating a null session , as we have entered a usename of ""
-	rpcclient -U "" -N IPADDRESS
+	#rpcclient -U "" -N IPADDRESS
 	enumdomusers
 	queryuser RID
 
 Multiple Ways to Exploit SMB
+
 	
