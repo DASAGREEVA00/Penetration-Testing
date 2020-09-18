@@ -58,7 +58,7 @@ The SMB NetBIOS service listen on TCP port 139 and 445, as well as several UDP p
 	  /usr/share/nmap/scripts/smb-brute.nse
 	  /usr/share/nmap/scripts/smb-double-pulsar-backdoor.nse
 	  /usr/share/nmap/scripts/smb-enum-domains.nse
-    /usr/share/nmap/scripts/smb-enum-groups.nse
+          /usr/share/nmap/scripts/smb-enum-groups.nse
 	  /usr/share/nmap/scripts/smb-enum-processes.nse
 	  /usr/share/nmap/scripts/smb-enum-services.nse
 	  /usr/share/nmap/scripts/smb-enum-sessions.nse
