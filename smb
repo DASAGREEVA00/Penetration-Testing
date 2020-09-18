@@ -1,4 +1,4 @@
-[create an anchor](#anchors-in-markdown)
+
 The Server Message Block(SMB) protocol's security track record has been poor for over a decade, due to its complex implecation, and open nature. From unauthenticated 
 SMB null session in Windows 2000 and XP, to a plethora of SMB bugs and vulnerabilities over the year, SMB has seen its fair share of action.
 Server Message Block (SMB), the modern dialect of which was known as Common Internet File System, operates as an application-layer network protocol for file sharing 
@@ -12,7 +12,7 @@ an opportunistic lock (oplock) and the server has to break an existing oplock be
 SMB connect to a supporting server using NetBIOS over TCP/IP, IPX/SPX, or NetBUI. Once the connection is established, the client computer or program can then open,
 read/write, and access files similar to the file system on a local computer.
 
-Versions of Windows SMB
+**Versions of Windows SMB**
 	1.CIFS: The old version of SMB, which was included in Microsoft Windows NT 4.0 in 1996.
 	2.SMB 1.0 / SMB1: The version used in Windows 2000, Windows XP, Windows Server 2003 and Windows Server 2003 R2.
         3.SMB 2.0 / SMB2: This version used in Windows Vista and Windows Server 2008.
