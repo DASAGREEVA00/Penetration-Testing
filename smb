@@ -1,7 +1,15 @@
-The Server Message Block(SMB) protocol's security track record has been poor for over a decade, due to its complex implecation, and open nature. From unauthenticated SMB null session in Windows 2000 and XP, to a plethora of SMB bugs and vulnerabilities over the year, SMB has seen its fair share of action.
-Server Message Block (SMB), the modern dialect of which was known as Common Internet File System, operates as an application-layer network protocol for file sharing that allows applications on a computer to read and write to files and to request services from server programs in a computer network. The SMB protocol can be used on top of its TCP/IP protocol or other network protocols. Using the SMB protocol, an application (or the user of an application) can access files or other resources at a remote server. This allows applications to read, create, and update files on the remote server. It can also communicate with any server program that is set up to receive an SMB client request.
+The Server Message Block(SMB) protocol's security track record has been poor for over a decade, due to its complex implecation, and open nature. From unauthenticated 
+SMB null session in Windows 2000 and XP, to a plethora of SMB bugs and vulnerabilities over the year, SMB has seen its fair share of action.
+Server Message Block (SMB), the modern dialect of which was known as Common Internet File System, operates as an application-layer network protocol for file sharing 
+that allows applications on a computer to read and write to files and to request services from server programs in a computer network. The SMB protocol can be used on 
+top of its TCP/IP protocol or other network protocols. Using the SMB protocol, an application (or the user of an application) can access files or other resources at a 
+remote server. This allows applications to read, create, and update files on the remote server. It can also communicate with any server program that is set up to 
+receive an SMB client request.
 Working of SMB
-SMB functions as a request-response or client-server protocol. The only time that the protocol does not work in a response-request framework is when a client requests an opportunistic lock (oplock) and the server has to break an existing oplock because the current mode is incompatible with the existing oplock. Client computers using SMB connect to a supporting server using NetBIOS over TCP/IP, IPX/SPX, or NetBUI. Once the connection is established, the client computer or program can then open, read/write, and access files similar to the file system on a local computer.
+SMB functions as a request-response or client-server protocol. The only time that the protocol does not work in a response-request framework is when a client requests 
+an opportunistic lock (oplock) and the server has to break an existing oplock because the current mode is incompatible with the existing oplock. Client computers using
+SMB connect to a supporting server using NetBIOS over TCP/IP, IPX/SPX, or NetBUI. Once the connection is established, the client computer or program can then open,
+read/write, and access files similar to the file system on a local computer.
 
 Versions of Windows SMB
 	1.CIFS: The old version of SMB, which was included in Microsoft Windows NT 4.0 in 1996.
@@ -12,7 +20,9 @@ Versions of Windows SMB
 	6.SMB 3.02 / SMB3: This version used in Windows 8.1 and Windows Server 2012 R2.
  	7.SMB 3.1: This version used in Windows Server 2016 and Windows 10.
 
-Presently, the latest version of SMB is the SMB 3.1.1 which was introduced with Windows 10 and Windows Server 2016. This version supports AES 128 GCM encryption in addition to AES 128 CCM encryption added in SMB3, and implements pre-authentication integrity check using SHA-512 hash. SMB 3.1.1 also makes secure negotiation mandatory when connecting to clients using SMB 2.x and higher.
+Presently, the latest version of SMB is the SMB 3.1.1 which was introduced with Windows 10 and Windows Server 2016. This version supports AES 128 GCM encryption in 
+addition to AES 128 CCM encryption added in SMB3, and implements pre-authentication integrity check using SHA-512 hash. SMB 3.1.1 also makes secure negotiation 
+mandatory when connecting to clients using SMB 2.x and higher.
 
 SMB Enumeration
 To identify the following information of Windows or Samba system, every pentester go for SMB enumeration during network penetration testing.
@@ -38,7 +48,7 @@ Scanning for the NetBIOS Service
 	/usr/share/nmap/scripts/smb-brute.nse
 	/usr/share/nmap/scripts/smb-double-pulsar-backdoor.nse
 	/usr/share/nmap/scripts/smb-enum-domains.nse
-    /usr/share/nmap/scripts/smb-enum-groups.nse
+        /usr/share/nmap/scripts/smb-enum-groups.nse
 	/usr/share/nmap/scripts/smb-enum-processes.nse
 	/usr/share/nmap/scripts/smb-enum-services.nse
 	/usr/share/nmap/scripts/smb-enum-sessions.nse
