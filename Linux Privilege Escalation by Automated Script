@@ -1,7 +1,3 @@
-We all know that after compromising the victim's machine we have a low-privileges shell that we want to escalate into a higher-privileged shell and this process is 
-known as Privilege Escalation. There are some scripts for Linux that may come in useful when trying to escalate privileges on a target system. This is generally 
-aimed at enumeration rather than specific vulnerabilities/exploits. This type of script could save your much time.
-
 1.Vectors of Privilege Escalation
 1.OS Detail & Kernel Version
 2.Any Vulnerable package installed or running
