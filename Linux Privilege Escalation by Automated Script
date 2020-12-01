@@ -1,0 +1,109 @@
+We all know that after compromising the victim's machine we have a low-privileges shell that we want to escalate into a higher-privileged shell and this process is 
+known as Privilege Escalation. There are some scripts for Linux that may come in useful when trying to escalate privileges on a target system. This is generally 
+aimed at enumeration rather than specific vulnerabilities/exploits. This type of script could save your much time.
+
+1.Vectors of Privilege Escalation
+1.OS Detail & Kernel Version
+2.Any Vulnerable package installed or running
+3.Files and Folders with Full Control or Modify Access
+4.File with SUID Permissions
+5.Mapped Drives (NFS)
+6.Potentially Interesting Files
+7.Environment Variable Path
+8.Network Information (interfaces, arp, netstat)
+9.Running Processes
+10.Cronjobs
+11.User's Sudo Right
+12.Wildcard Injection
+
+There are several script use in Penetration testing for quickly identify potential privilege escalation vectors on Windows systems and today we are going to 
+elaborate each script which is working smoothly.
+
+2.LinuEnum
+Scripted Local Linux Enumeration & Privilege Escalation Checks Shellscript that enumerates the system configuration and high-level summary of the checks/tasks
+performed by LinEnum.
+Privileged access: Diagnose if the current user has sudo access without a password; whether the root's home directory is accessible.
+System Information: Hostname, Networking details, Current IP and etc.
+User Information: Current user, List all users including uid/gid information, List root accounts, Checks if password hashes are stored in /etc/passwd.
+Kernel and distribution release details.
+
+You can download it through GitHub with help of the following command: 
+#git clone //github.com/rebootuser/LinEnum.git 
+
+Once you download this script, you can simply run it by tying. /LinEnum.sh on the terminal. Hence it will dump all fetched data and system details.
+
+3.Linuxprivchecker
+Enumerates the system configuration and runs some privilege escalation checks as well. It is a python implementation to suggest exploits particular to the system 
+that's been taken under. Use wget to download the script from its source URL.
+#wget //www.securitysift.com/download/linuxprivchecker.py
+
+Now to use this script just type python linuxprivchecker.py on the terminal and this will enumerate file and directory permissions/contents. This script works the
+same as LinEnum and hunts details related to system network and user.
+#python linuxprivchecker.py
+
+4.Linux Exploit Suggester 2
+Next-generation exploits suggester based on Linux_Exploit_Suggester. This program performs a 'uname -r' to grab the Linux operating system release version and 
+returns a list of possible exploits.
+This script is extremely useful for quickly finding privilege escalation vulnerabilities both in on-site and exam environments.
+Key Improvements Include:
+1.More exploits
+2.Accurate wildcard matching. This expands the scope of searchable exploits.
+3.Output colorization for easy viewing.
+  
+
+#git clone //github.com/jondonas/linux-exploit-suggester-2.git
+#cd linux-exploit-suggester-2
+
+You can use the '-k' flag to manually enter a wildcard for the kernel/operating system release version.
+#./linux-exploit-suggester-2.pl -k 3.5
+
+5. Bashark
+Bashark aids pentesters and security researchers during the post-exploitation phase of security audits.
+It's Features:
+1.Single Bash script
+2.Lightweight and fast
+3.Multi-platform: Unix, OSX, Solaris etc.
+4.No external dependencies
+5.Immune to heuristic and behavioral analysis
+6.Built-in aliases of often used shell commands
+7.Extends system shell with post-exploitation oriented functionalities
+8.Stealthy, with custom cleanup routine activated on exit
+9.Easily extensible (add new commands by creating Bash functions)
+10.Full tab completion
+
+Execute the following command to download it from the GitHub:
+#git clone //github.com/TheSecondSun/Bashark.git
+#cd Bashark
+
+To execute the script you need to run following command:
+#source bashark.sh
+#help
+
+The help command will let you know all available options provide by bashark for post exploitation.With help of portscan option, you can scan the internal network 
+of the compromised machine.
+To fetch all configuration file you can use getconf option. It will pull out all configuration file stored inside /etc directory. Similarly, you can use the 
+getprem option to view all binaries files of the target's machine.
+#portscan < target's IP>
+#getconf
+#getprem
+
+6.BeRoot
+BeRoot Project is a post exploitation tool to check common misconfiguration to find a way to escalate our privilege. This tool does not realize any exploitation. 
+It mains goal is not to realize a configuration assessment of the host (listing all services, all processes, all network connection, etc.) but to print only 
+information that has been found as a potential way to escalate our privilege.
+#git clone //github.com/AlessandroZ/BeRoot.git
+#cd Linux
+#chmod 777 beroot.py
+
+To execute the script you need to run following command:
+#./beroot.py
+
+It will try to enumerate all possible loopholes which can lead to privilege Escalation, as you can observe the highlighted yellow color text represents a weak 
+configuration that can lead to root privilege escalation whereas the red color represents the technique that can be used to exploit.
+It's Functions:
+1.Check Files Permissions
+2.SUID bin
+3.NFS root Squashing
+4.Docker
+5.Sudo rules
+6.Kernel Exploit
